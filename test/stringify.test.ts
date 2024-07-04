@@ -1,6 +1,6 @@
 import * as assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
-import * as qs from './index'
+import * as qs from '../src/stringify.js'
 
 describe('stringify', () => {
 	it('stringifies a querystring object', () => {

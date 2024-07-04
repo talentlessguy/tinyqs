@@ -25,5 +25,15 @@ export const stringify = (obj: any) => {
 	// sort alphabetically
 	params.sort()
 
-	return params.toString().replaceAll('%7E', '~').replaceAll('+', '%20')
+	let qs = params.toString()
+
+	while (qs.includes('%7E')) {
+		qs = qs.replace('%7E', '~')
+	}
+
+	while (qs.includes('+')) {
+		qs = qs.replace('+', '%20')
+	}
+
+	return qs
 }

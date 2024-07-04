@@ -1,6 +1,6 @@
 import * as assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
-import * as qs from './index'
+import * as qs from '../src/parse.js'
 
 describe('parse', () => {
 	it('parses a simple string', () => {
@@ -47,7 +47,6 @@ describe('parse', () => {
 
 	it('parses empty values', () => {
 		assert.deepStrictEqual(qs.parse(''), {})
-		// @ts-expect-error only for test
 		assert.deepStrictEqual(qs.parse(null), {})
 		assert.deepStrictEqual(qs.parse(undefined), {})
 	})
