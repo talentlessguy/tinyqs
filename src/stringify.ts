@@ -1,21 +1,29 @@
+const td = new TextDecoder()
+
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const stringify = (obj: any) => {
 	const params = new URLSearchParams()
 
+	if (obj === true) return 'true'
 	if (typeof obj !== 'object' || obj == null) return ''
 
 	if (typeof obj === 'symbol') return obj.toString()
 
-	const keys = Object.keys(obj)
-
-	for (const key of keys.sort()) {
+	for (const key of Object.keys(obj)) {
 		let value = obj[key]
-		if (value) {
+		if (value != null) {
 			if (typeof value === 'symbol') value = value.toString()
-			if (value instanceof Date) value = value.toISOString()
-			if (!(Array.isArray(value) && value.length === 0)) params.set(key, value)
+			else if (value instanceof Date) value = value.toISOString()
+			else if (ArrayBuffer.isView(value)) value = td.decode(value)
+			else if (typeof value === 'boolean') value = value ? 'true' : 'false'
+			if (!(Array.isArray(value) && value.length === 0)) {
+				params.set(key, value)
+			}
 		}
 	}
 
-	return params.toString()
+	// sort alphabetically
+	params.sort()
+
+	return params.toString().replaceAll('%7E', '~').replaceAll('+', '%20')
 }

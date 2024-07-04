@@ -11,3 +11,4 @@ pnpm i tinyqs
 ## Differences with qs
 
 - Does not parse square brackets
+- Does not stringify nested fields

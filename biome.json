@@ -16,6 +16,9 @@
 		"formatter": {
 			"semicolons": "asNeeded",
 			"quoteStyle": "single"
+		},
+		"linter": {
+			"enabled": true
 		}
 	}
 }

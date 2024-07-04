@@ -51,15 +51,11 @@ describe('stringify', () => {
 		assert.strictEqual(qs.stringify(obj), 'a=b')
 	})
 
-	it.skip('drops keys with a value of undefined', () => {
+	it('drops keys with a value of undefined', () => {
 		assert.strictEqual(qs.stringify({ a: undefined }), '')
-		assert.strictEqual(
-			qs.stringify({ a: { b: undefined, c: '' } }),
-			'a%5Bc%5D=',
-		)
 	})
 
-	it.skip('url encodes values', () => {
+	it('url encodes values', () => {
 		assert.strictEqual(qs.stringify({ a: 'b c' }), 'a=b%20c')
 	})
 
@@ -69,10 +65,19 @@ describe('stringify', () => {
 		assert.strictEqual(qs.stringify({ a: now }), expected)
 	})
 
-	it.skip('stringifies the weird object from qs', () => {
+	it('stringifies the weird object from qs', () => {
 		assert.strictEqual(
 			qs.stringify({ 'my weird field': '~q1!2"\'w$5&7/z8)?' }),
 			'my%20weird%20field=~q1%212%22%27w%245%267%2Fz8%29%3F',
 		)
+	})
+
+	it('stringifies boolean values', () => {
+		assert.strictEqual(qs.stringify({ a: true }), 'a=true')
+		assert.strictEqual(qs.stringify({ b: false }), 'b=false')
+	})
+
+	it('stringifies buffer values', () => {
+		assert.strictEqual(qs.stringify({ a: Buffer.from('test') }), 'a=test')
 	})
 })
